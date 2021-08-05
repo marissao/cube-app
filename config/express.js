@@ -31,6 +31,8 @@ module.exports = (app) => {
         res.render('404');
     });
 
+    app.use(express.static("./static"));
+
     //TODO: Setup the body parser
 
     //TODO: Setup the static files
