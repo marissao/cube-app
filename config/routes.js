@@ -18,12 +18,12 @@ module.exports = (app) => {
     });
 
     app.get('/create/accessory', (req, res) => {
-        res.render('about');
+        res.render('createAccessory');
     });
 
-    app.get('/about', (req, res) => {
-        res.render('about');
-    });
+    // app.get('/about', (req, res) => {
+    //     res.render('createAccessory');
+    // });
 
     app.get('/*', (req, res) => {
         res.render('404');
