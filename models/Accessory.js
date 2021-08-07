@@ -1,0 +1,15 @@
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const cubeSchema = require('./Cube');
+
+const accessorySchema = Schema({
+    name: String,
+    description: String,
+    imageUrl: String,
+    cubes: Number,
+    accessories: [{ type: Schema.Types.ObjectId, ref: 'Cube'}],
+});
+
+const Accessory = mongoose.model("Accessory", accessorySchema);
+
+module.exports = Accessory;
