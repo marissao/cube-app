@@ -28,7 +28,7 @@
         <input type="number" name="to" class="difficulty" placeholder="Difficulty to...">
         <input type="submit" value="search">
       </form>
-      <div class="cube">
+      {{!-- <div class="cube">
         <img class="cube" src="https://ae01.alicdn.com/kf/HTB1CSddXRxRMKJjy0Fdq6yifFXa6/Gan-356-Air-SM-3x3-Black-Magic-cube-GAN-Air-SM-Magnetic-3x3x3-Speed-cube-gans.jpg">
         <p class="name">Gan356 Air SM</p>
         <p><span>Difficulty level:</span> 3</p>
@@ -51,7 +51,15 @@
         <p class="name">Megaminx</p>
         <p><span>Difficulty level:</span> 3</p>
         <a class="btn" href="/details/5c3a68d9f78d6638ec8fdad7">Details</a>
+      </div> --}}
+      {{#each cubes}}
+      <div class="cube">
+        <img class="cube" src="{{imageUrl}}">
+        <p class="name">{{name}}</p>
+        <p><span>Difficulty level:</span> {{difficultyLevel}}</p>
+        <a class="btn" href="/details/{{_id}}">Details</a>
       </div>
+      {{/each}}
 
     </main>
   </div>

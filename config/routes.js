@@ -1,15 +1,21 @@
 // TODO: Require Controllers...
 const Cube = require('../models/Cube');
 const Accessory = require('../models/Accessory');
-const url = require('url');
 
 module.exports = (app) => {
     app.get('/', (req, res) => {
-        res.render('index');
+        Cube.find(function(err, cubes){
+            if (err) return console.log(err);
+            res.render('index', {cubes});
+        }).lean();        
     });
 
     app.get('/details/:id', (req, res) => {
-        res.render('details');
+        let currentId = req.url.split("/")[2];
+        Cube.findById(currentId, function (err, cube) {
+            if (err) return console.log(err);
+            res.render('details', cube);
+        }); 
     });
 
     app.get('/create', (req, res) => {
