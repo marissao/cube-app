@@ -30,22 +30,18 @@
       </div>
       <h2>Accessories</h2>
         <div class="accessories">
+          {{#if accessories}}
+          {{#each accessories}}
           <div class="accessory">
-              <img src="https://images-na.ssl-images-amazon.com/images/I/61J8UP8pySL._SX425_.jpg" alt="stickerName">
-              <h3>Accessory Name</h3>
-              <p>Accessory Description</p>
+              <img src="{{imageUrl}}" alt="stickerName">
+              <h3>{{name}}</h3>
+              <p>{{description}}</p>
           </div>
-          <div class="accessory">
-            <img src="https://images-na.ssl-images-amazon.com/images/I/61J8UP8pySL._SX425_.jpg" alt="stickerName">
-            <h3>Accessory Name</h3>
-            <p>Accessory Description</p>
-          </div>
-          <div class="accessory">
-            <img src="https://images-na.ssl-images-amazon.com/images/I/61J8UP8pySL._SX425_.jpg" alt="stickerName">
-            <h3>Accessory Name</h3>
-            <p>Accessory Description</p>
-          </div>
-            <h3 class="italic">This cube has no accessories yet...</h3>
+          {{/each}}
+          {{/if}}
+          {{#unless accessories}}
+          <h3 class="italic">This cube has no accessories yet...</h3>
+          {{/unless}}
         </div>
     </main>
   </div>
