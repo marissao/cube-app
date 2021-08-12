@@ -13,12 +13,7 @@ module.exports = (app) => {
     app.get('/details/:id', async function (req, res) {
         let cubeId = req.params.id;
         // cubeId = req.url.split("/")[2]; // Alt way to get ID
-        // await Cube.findById(cubeId, function (err, cubes) {
-        //     if (err) return console.log(err);
-        //     res.render('details', cubes);
-        // });
         const cube = await Cube.findById(cubeId).populate('accessories');
-        console.log("After populate: ", cube);
         res.render('details', cube);
     });
 
@@ -34,33 +29,40 @@ module.exports = (app) => {
         res.render('createAccessory');
     });
 
-    app.get('/details/attach/accessory/:id', (req, res) => {
-        let cubeId = req.params.id;
-        Cube.findById(cubeId, async function (err, cube) {
-            if (err) return console.log(err);
+    app.get('/details/attach/accessory/:id', async function (req, res) {
+        const cubeId = req.params.id;
+        const cube = await Cube.findById(cubeId, (err, cube) => {
+            if (err) return console.log(err); 
+        });
             
-            let addAccesoriesObj = {
-                cube: {
-                    accessories: cube.accessories,
-                    _id: cube._id,
-                    name: cube.name,
-                    imageUrl: cube.imageUrl,
-                }
-            };
+        let outputObj = {
+            cube: {
+                accessories: cube.accessories,
+                _id: cube._id,
+                name: cube.name,
+                imageUrl: cube.imageUrl,
+            },
+        };
             
-            if (addAccesoriesObj.cube.accessories.length === 0) {
-                let accessoriesArrSimple = [];
-                await Accessory.find({}, function (err, accessories){
-                    accessories.forEach(accessory => {
-                        accessoriesArrSimple.push({ _id: accessory.id, name: accessory.name});
-                    });
-                    
-                });
-                addAccesoriesObj.options = accessoriesArrSimple;
-            }
-            // console.log("1: ", addAccesoriesObj);
-            res.render("attachAccessory", addAccesoriesObj);
-        }); 
+        let outputArr = [];
+        if (outputObj.cube.accessories.length === 0) {
+            // Grab all accessories from accessories database
+            await Accessory.find({}, function (err, accessories){
+                accessories.forEach(accessory => {
+                    outputArr.push({ _id: accessory.id, name: accessory.name});
+                });    
+            });
+
+            // Create new property to outputObj so hbs can render data from two collections
+            outputObj.options = outputArr;
+
+        } else {
+            // Grab all docs in accessories collection that are not equal to the values in cube.accessories array
+            const availableAccessories = await Accessory.find({ _id: { $nin: cube.accessories } });
+            outputObj.options = availableAccessories;
+        }
+
+        res.render("attachAccessory", outputObj);
     });
 
     app.get('/*', (req, res) => {
@@ -68,7 +70,6 @@ module.exports = (app) => {
     });
     
     app.post('/create', function (req, res) {
-        // console.log("req.body for creating a cube: ", req.body);
         let newCube = new Cube(req.body);
         newCube.save(function (err, newCube) {
             if (err) return console.error(err);
@@ -79,9 +80,7 @@ module.exports = (app) => {
     });
 
     app.post('/create/accessory', function (req, res) {
-        // console.log("req.body for creating an accessory: ", req.body);
         let newAccessory = new Accessory(req.body);
-        console.log(newAccessory);
         newAccessory.save(function (err, newAccessory) {
             if (err) return console.error(err);
             console.log("Accessory saved!");
@@ -93,10 +92,10 @@ module.exports = (app) => {
     app.post('/details/attach/accessory/:id', async function (req, res) {
         const accessoryId = req.body.accessory.split(" ")[1];
         const cubeId = req.params.id;
-        console.log("3: ", accessoryId);
-        console.log("4: ", cubeId);
+
         // Grab cube by ID
         const cube = await Cube.findById(cubeId);
+
         // Assign accessory's ID to found cube
         cube.accessories.push(accessoryId);
         await cube.save();
@@ -105,8 +104,6 @@ module.exports = (app) => {
         const accessory = await Accessory.findById(accessoryId);
         accessory.cubes.push(cubeId);
         await accessory.save();
-        res.status(201);
-        console.log("It works!");
 
         res.redirect(301, `/details/${cubeId}`);
     });
