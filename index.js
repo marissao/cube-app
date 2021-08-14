@@ -2,8 +2,10 @@ const env = process.env.NODE_ENV || 'development';
 const config = require('./config/config')[env];
 const app = require('express')();
 const mongoose = require('mongoose');
-mongoose.connect("mongodb+srv://marissa:pass1234word@cluster0.mis4g.mongodb.net/cube-database?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true });
-// const Cube = require('./models/Cube');
+mongoose.connect("mongodb+srv://marissa:pass1234word@cluster0.koedr.mongodb.net/cube-database?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true });
+
+// mongoose.connect("mongodb+srv://marissa:pass1234word@cluster0.koedr.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true });
+// // const Cube = require('./models/Cube');
 
 require('./config/express')(app);
 require('./config/routes')(app);
