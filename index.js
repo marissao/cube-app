@@ -8,7 +8,6 @@ require('./config/express')(app);
 require('./config/routes')(app);
 
 const uri = process.env.ATLAS_URI;
-console.log(uri);
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const db = mongoose.connection;

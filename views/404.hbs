@@ -18,8 +18,10 @@
                 <li><a href="/create/cube">Add a Cube</a></li>
                 <li><a href="/create/accessory">Add Accessory</a></li>
                 <li><a href="/logout">Logout</a></li>
+                {{#if ths_auth}}
                 <li><a href="/login">Login</a></li>
                 <li><a href="/register">Register</a></li>
+                {{/if}}
             </ul>
         </header>
         <main>
