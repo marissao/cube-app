@@ -1,6 +1,7 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
 module.exports = (app) => {
     // Register a Handlebars View Engine Using the Node Package
@@ -12,6 +13,13 @@ module.exports = (app) => {
 
     // Body Parser
     app.use(bodyParser.urlencoded({extended: true}));
+
+    // Cookie-parser
+    app.use(cookieParser());
+
+    // app.get('/', sessionChecker, (req, res) => {
+    //     res.redirect('/login');
+    // });
     
     // Serve Static Files
     app.use(express.static("./static"));
