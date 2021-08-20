@@ -27,6 +27,8 @@ module.exports = (app) => {
 
     app.get('/delete', editController.delete_get);
 
+    app.get('/logout', userController.user_logout_get);
+
     app.get('/*', auth, (req, res) => {
         res.render('404', {jwt: req.cookies.jwt});
     });

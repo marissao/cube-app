@@ -33,7 +33,13 @@ const user_login_post = async (req, res) => {
 
 };
 
+const user_logout_get = (req, res) => {
+    res.clearCookie("jwt");
+    res.redirect("/");
+};
+
 module.exports = {
     user_register_post,
     user_login_post,
+    user_logout_get,
 };

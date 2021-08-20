@@ -3,7 +3,7 @@ const Cube = require('../models/Cube');
 const index_get = async function (req, res) {
     let cubes = await Cube.find(function (err, cubes){
         if (err) return console.log(err);
-    });
+    }).lean().exec();
     res.render('index', {cubes: cubes, jwt: req.cookies.jwt}); // cubes is an array, need to pass in as obj for hbs
 };
 
