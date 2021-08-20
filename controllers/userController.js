@@ -26,7 +26,7 @@ const user_login_post = async (req, res) => {
             
             user.generateToken((err, user) => {
                 if (err) return res.status(400).send(err);
-                res.cookie('ths_auth', user.token).redirect(301, "/");
+                res.cookie('jwt', user.token).redirect(301, "/");
             });
         });
     });
