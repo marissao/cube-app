@@ -15,13 +15,15 @@
         <li><img class="logo" src="/images/logo.png"></li>
         <li><a href="/">Browse</a></li>
         <li><a href="/about">About</a></li>
+        {{#if jwt}}
         <li><a href="/create/cube">Add a Cube</a></li>
         <li><a href="/create/accessory">Add Accessory</a></li>
         <li><a href="/logout">Logout</a></li>
-        {{#if ths_auth}}
-        <li><a href="/login">Login</a></li>
-        <li><a href="/register">Register</a></li>
         {{/if}}
+        {{#unless jwt}}
+        <li><a href="/register">Login</a></li>
+        <li><a href="/register">Register</a></li>
+        {{/unless}}
       </ul>
     </header>
     <main>

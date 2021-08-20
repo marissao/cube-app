@@ -2,11 +2,11 @@ const Cube = require('../models/Cube');
 const Accessory = require('../models/Accessory');
 
 const create_cube_get = (req, res) => {
-    res.render('createCube', req.user);
+    res.render('createCube', {jwt: req.cookies.jwt});
 };
 
 const create_accessory_get = (req, res) => {
-    res.render('createAccessory');
+    res.render('createAccessory', {jwt: req.cookies.jwt});
 };
 
 const create_cube_post = (req, res) => {

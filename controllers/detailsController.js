@@ -5,7 +5,7 @@ const details_id_get = async function (req, res) {
     let cubeId = req.params.id;
     // cubeId = req.url.split("/")[2]; // Alt way to get ID
     const cube = await Cube.findById(cubeId).populate('accessories');
-    res.render('details', cube);
+    res.render('details', {cube: cube, jwt: req.cookies.jwt});
 };
 
 const details_attach_accessory_get = async function (req, res) {
@@ -15,6 +15,7 @@ const details_attach_accessory_get = async function (req, res) {
     });
         
     let outputObj = {
+        jwt: req.cookies.jwt,
         cube: {
             accessories: cube.accessories,
             _id: cube._id,
