@@ -16,10 +16,6 @@ module.exports = (app) => {
 
     // Cookie-parser
     app.use(cookieParser());
-
-    // app.get('/', sessionChecker, (req, res) => {
-    //     res.redirect('/login');
-    // });
     
     // Serve Static Files
     app.use(express.static("./static"));

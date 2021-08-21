@@ -1,10 +1,11 @@
 const User = require('../models/User');
 
 const auth = async (req, res, next) => {
-    // Check if token is valid
+    console.log("Middleware is running!");
     let token = req.cookies.jwt;
     await User.findByToken(token, (err, user) => {
-        if (err) console.log("Token not found");
+        console.log("this is user ", user);
+        if (err) throw err;
         if (!user) return res.json({
             isAuth: false, 
             error: true,
