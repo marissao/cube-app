@@ -4,7 +4,7 @@ const Accessory = require('../models/Accessory');
 const details_id_get = async function (req, res) {
     let cubeId = req.params.id;
     // cubeId = req.url.split("/")[2]; // Alt way to get ID
-    const cube = await Cube.findById(cubeId).populate('accessories');
+    const cube = await Cube.findById(cubeId).populate('accessories').lean().exec();
     res.render('details', {cube: cube, jwt: req.cookies.jwt});
 };
 

@@ -15,9 +15,9 @@ module.exports = (app) => {
 
     app.get('/register', publicController.register_get);
 
-    app.get('/create/cube', auth, createController.create_cube_get);
+    app.get('/create/cube', createController.create_cube_get);
 
-    app.get('/create/accessory', auth, createController.create_accessory_get);
+    app.get('/create/accessory', createController.create_accessory_get);
 
     app.get('/details/:id', detailsController.details_id_get);
 
@@ -27,7 +27,7 @@ module.exports = (app) => {
 
     app.get('/delete', editController.delete_get);
 
-    app.get('/logout', auth, userController.user_logout_get);
+    app.get('/logout', userController.user_logout_get);
 
     app.get('/*', (req, res) => {
         res.render('404', {jwt: req.cookies.jwt});

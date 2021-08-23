@@ -46,10 +46,13 @@ const user_login_post = async (req, res) => {
 };
 
 const user_logout_get = async (req, res) => {
-    req.user.deleteToken(req.token, (err, user) => {
-        if (err) return res.status(400).send(err);
-        res.clearCookie("jwt");
-        res.redirect("/");
+    let token = req.cookies.jwt;
+    await User.findByToken(token, (err, user) => {
+        user.deleteToken(token, (err, user) => {
+            if (err) return res.status(400).send(err);
+            res.clearCookie("jwt");
+            res.redirect("/");
+        });
     });
 };
 

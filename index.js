@@ -8,6 +8,7 @@ require('./config/express')(app);
 require('./config/routes')(app);
 
 const uri = process.env.ATLAS_URI;
+mongoose.set('useCreateIndex', true); // Removes error "DeprecationWarning: collection.ensureIndex is deprecated. Use createIndexes instead."
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const db = mongoose.connection;
